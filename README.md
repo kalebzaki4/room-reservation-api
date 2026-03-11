@@ -1,88 +1,89 @@
-# 🚀 Estudos e Projetos — Por kalebzaki
+# 🚀 SyncSpace API
 
----
+> A professional-grade Room Reservation System built with Java 21 and Spring Boot 3. Optimized for concurrency, security, and scalability.
 
-## Índice
+[![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-green?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-blue?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-* [Aviso Importante](#-aviso-importante)  
-* [Sobre o Repositório](#-sobre-o-repositório)  
-* [Tecnologias & Estrutura](#-tecnologias--estrutura)  
-* [Como Começar](#-como-começar)  
-* [Dicas de Estudo](#-dicas-de-estudo)  
-* [Como Contribuir](#-como-contribuir)  
-* [Licença](#-licença)  
-* [Sobre o Autor](#-sobre-o-autor)  
+**SyncSpace** is a robust REST API designed to handle corporate meeting room bookings. It goes beyond a simple CRUD by implementing advanced backend concepts like **Optimistic Locking** for concurrency and **Stateless JWT Authentication**.
 
----
+## ✨ Features
 
-## ⚠️ Aviso Importante
+- ⚡ **Spring Boot 3.2** — Built using the latest features of the Spring ecosystem.
+- ⛑ **Optimistic Locking** — Prevents double-booking using JPA versioning (`@Version`).
+- 🔐 **Stateless Security** — Secure endpoints with Spring Security and JWT.
+- 🗃 **MySQL 8.0** — High-performance relational data management.
+- 🐳 **Docker Ready** — Fully containerized environment (App + DB) for easy deployment.
+- 📏 **Clean Architecture** — Clearly separated layers for Controllers, Services, and Repositories.
+- 🛡 **Data Validation** — Strict request validation using Bean Validation (Hibernate Validator).
+- 📖 **OpenAPI 3 (Swagger)** — Fully documented and interactive API playground.
 
-Este repositório começou como um espaço para estudar **Java** do básico ao avançado,  
-mas acabou crescendo para incluir outras linguagens e tecnologias como **Node.js**, **GraphQL** e mais.
+## 🚀 Quick Start
 
-Se você também quer aprender, está no lugar certo. Todo o conteúdo é aberto e organizado para que qualquer pessoa possa acompanhar no seu ritmo.
+### 1. Requirements
+- **Docker** & **Docker Compose**
+- **JDK 21** (only if running locally without Docker)
+- **Maven 3.x**
 
----
+### 2. Development
+The fastest way to get the project running is using Docker Compose:
 
-## 📚 Sobre o Repositório
+# Clone the repository
+git clone https://github.com/kalebzaki4/syncspace-api
 
-Você encontrará:
+# Navigate to the folder
+cd syncspace-api
 
-* Conteúdos organizados por **linguagem e nível**.
-* Pastas numeradas no caso de cursos sequenciais (ex.: Java Parte 1, Parte 2…).
-* Projetos práticos para aplicar o que foi aprendido.
-* Exercícios comentados para facilitar a compreensão.
+# Start the services (API + MySQL)
+docker-compose up -d
 
----
+Once started, the API will be available at **http://localhost:8080**.  
+Explore the interactive documentation at: **http://localhost:8080/swagger-ui.html**
 
-## 🎯 Como Começar
+### 📂 Directory Structure
 
-1. **Clone o repositório**:
+```plaintext
+src/main/java/com/kalebzaki/syncspace/
+├── config/      # Security, Swagger, and App configurations
+├── controllers/ # REST API Resource Providers
+├── dto/         # Request/Response Data Transfer Objects
+├── exceptions/  # Global Exception Handling & Custom Errors
+├── models/      # Database Entities & Mappings
+├── repositories/# Spring Data JPA Interfaces
+└── services/    # Business Logic & Rule Validations
+```
 
-   ```bash
-   git clone https://github.com/kalebzaki/java-estudos.git
-   ```
-2. **Abra no seu editor** (VS Code, IntelliJ IDEA, Eclipse, etc.).
-3. Entre na pasta da **tecnologia** que deseja estudar.
-4. Siga a ordem sugerida dentro de cada pasta.
-5. Rode, modifique e teste os exemplos.
+## 🛠 Scripts & Commands
 
----
+| Command                    | Description                                           |
+|----------------------------|-------------------------------------------------------|
+| `./mvnw spring-boot:run`   | Starts the application locally.                       |
+| `./mvnw clean package`     | Creates an optimized .jar production build.           |
+| `./mvnw test`              | Runs the JUnit 5 and Mockito test suite.              |
+| `docker-compose logs -f`   | View real-time logs from the API and MySQL.           |
 
-## 💡 Dicas de Estudo
+## 📐 Architecture & Decisions
 
-* Siga o passo a passo dentro de cada pasta.
-* Leia os comentários nos códigos para entender a lógica.
-* Modifique os exemplos e crie variações para fixar o conteúdo.
-* Ao estudar várias tecnologias, compare conceitos semelhantes entre elas.
+- **DTO Pattern**: Used to decouple the database layer from the client, ensuring security and API flexibility.
+- **Global Error Handling**: Implemented `@ControllerAdvice` to return standardized error messages following RFC 7807.
+- **Optimistic Locking**: Essential for reservation systems to handle simultaneous booking attempts without database overhead.
 
----
+## 🤝 Contributing
 
-## 🤝 Como Contribuir
+1. Fork the project.
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the Branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
-1. Faça um **fork** deste repositório.
-2. Crie uma **branch** descritiva:
+## 📄 License
 
-   ```bash
-   git checkout -b melhoria/exemplo-xyz
-   ```
-3. Faça suas alterações e **commit**:
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-   ```bash
-   git commit -m "Adicionado exemplo de API GraphQL"
-   ```
-4. Abra um **pull request** para revisão.
+## 👨‍💻 Author
 
----
-
-## 📄 Licença
-
-Este conteúdo está sob a [MIT License](LICENSE).  
-Você é livre para usar, modificar e distribuir, desde que mantenha os créditos.
-
----
-
-## 👨‍💻 Sobre o Autor
-
-Eu sou [kalebzaki](https://github.com/kalebzaki), apaixonado por programação e sempre aprendendo novas tecnologias.  
-Este repositório é meu laboratório de estudos e também um espaço aberto para ajudar quem quer aprender junto.
+**Kaleb Zaki**  
+Backend Developer specializing in Java & Spring Ecosystem.
