@@ -32,7 +32,7 @@
 The fastest way to get the project running is using Docker Compose:
 
 # Clone the repository
-git clone https://github.com/kalebzaki4/syncspace-api
+git clone https://github.com/kalebzaki4/room-reservation-api
 
 # Navigate to the folder
 cd syncspace-api
@@ -40,13 +40,10 @@ cd syncspace-api
 # Start the services (API + MySQL)
 docker-compose up -d
 
-Once started, the API will be available at **http://localhost:8080**.  
-Explore the interactive documentation at: **http://localhost:8080/swagger-ui.html**
-
 ### 📂 Directory Structure
 
 ```plaintext
-src/main/java/com/kalebzaki/syncspace/
+src/main/java/com/kalebzaki/room-reservation-api/
 ├── config/      # Security, Swagger, and App configurations
 ├── controllers/ # REST API Resource Providers
 ├── dto/         # Request/Response Data Transfer Objects
