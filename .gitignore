@@ -18,6 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
+.env
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +32,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Logs e arquivos de sistema
+*.log
+.DS_Store
+Thumbs.db
