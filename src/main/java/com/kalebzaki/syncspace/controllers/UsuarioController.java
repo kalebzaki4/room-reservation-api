@@ -1,8 +1,9 @@
 package com.kalebzaki.syncspace.controllers;
 
-import com.kalebzaki.syncspace.dto.loginUsuarioDTO;
+import com.kalebzaki.syncspace.dto.UsuarioRequestDTO;
 import com.kalebzaki.syncspace.models.Usuario;
 import com.kalebzaki.syncspace.services.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity salvarUsuario(@RequestBody loginUsuarioDTO dadosUsuario) {
+    public ResponseEntity salvarUsuario(@RequestBody @Valid UsuarioRequestDTO dadosUsuario) {
         this.usuarioService.salvarUsuario(dadosUsuario);
         return ResponseEntity.ok().build();
     }
@@ -36,6 +37,12 @@ public class UsuarioController {
     public ResponseEntity deleteUsuario(@PathVariable Long id) {
         this.usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity updateUsuario(@RequestBody @Valid UsuarioRequestDTO dadosUsuario) {
+        this.usuarioService.updateUsuario(dadosUsuario);
+        return ResponseEntity.ok().build();
     }
 }
 
