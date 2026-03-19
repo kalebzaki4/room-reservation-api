@@ -1,6 +1,7 @@
 package com.kalebzaki.syncspace.controllers;
 
-import com.kalebzaki.syncspace.dto.UsuarioRequestDTO;
+import com.kalebzaki.syncspace.dto.UsuarioAtualizacaoDTO;
+import com.kalebzaki.syncspace.dto.AutenticacaoDTO;
 import com.kalebzaki.syncspace.models.Usuario;
 import com.kalebzaki.syncspace.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -21,6 +22,12 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id);
+        return ResponseEntity.ok(usuario);
+    }
+
     @GetMapping
     public ResponseEntity findAll() {
         List<Usuario> usuarios = usuarioService.findAll();
@@ -28,7 +35,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity salvarUsuario(@RequestBody @Valid UsuarioRequestDTO dadosUsuario) {
+    public ResponseEntity salvarUsuario(@RequestBody @Valid AutenticacaoDTO dadosUsuario) {
         this.usuarioService.salvarUsuario(dadosUsuario);
         return ResponseEntity.ok().build();
     }
@@ -40,7 +47,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity updateUsuario(@RequestBody @Valid UsuarioRequestDTO dadosUsuario) {
+    public ResponseEntity updateUsuario(@RequestBody @Valid UsuarioAtualizacaoDTO dadosUsuario) {
         this.usuarioService.updateUsuario(dadosUsuario);
         return ResponseEntity.ok().build();
     }
