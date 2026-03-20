@@ -1,5 +1,6 @@
 package com.kalebzaki.syncspace.controllers;
 
+import com.kalebzaki.syncspace.dto.AtualizarSalaDTO;
 import com.kalebzaki.syncspace.dto.CriacaoSalaDTO;
 import com.kalebzaki.syncspace.models.Room;
 import com.kalebzaki.syncspace.services.RoomService;
@@ -29,5 +30,17 @@ public class RoomController {
     public ResponseEntity<Room> criarSala(@RequestBody CriacaoSalaDTO room) {
         Room createdRoom = roomService.criarSala(room);
         return ResponseEntity.ok(createdRoom);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Room> updateSala(@RequestBody @PathVariable AtualizarSalaDTO room) {
+        Room atualizadaSala = roomService.updateSala(room);
+        return ResponseEntity.ok(atualizadaSala);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSala(@PathVariable Long id) {
+        this.roomService.deleteSala(id);
+        return ResponseEntity.noContent().build();
     }
 }

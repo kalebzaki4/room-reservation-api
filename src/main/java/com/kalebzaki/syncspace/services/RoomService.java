@@ -1,5 +1,6 @@
 package com.kalebzaki.syncspace.services;
 
+import com.kalebzaki.syncspace.dto.AtualizarSalaDTO;
 import com.kalebzaki.syncspace.dto.CriacaoSalaDTO;
 import com.kalebzaki.syncspace.models.Room;
 import com.kalebzaki.syncspace.repositories.RoomRepository;
@@ -32,5 +33,18 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
+    @Transactional
+    public Room updateSala(AtualizarSalaDTO room) {
+        Room existingRoom = roomRepository.findById(room.id()).orElseThrow(() -> new RuntimeException("Sala não encontrada com ID: " + room.id()));
+        existingRoom.setNome(room.nome());
+        existingRoom.setCapacidade(room.cacapacidade());
+        existingRoom.setLocalidade(room.localidade());
 
+        return roomRepository.save(existingRoom);
+    }
+
+    public void deleteSala(Long id) {
+        Room room = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Sala não encontrada com ID: " + id));
+        roomRepository.delete(room);
+    }
 }
