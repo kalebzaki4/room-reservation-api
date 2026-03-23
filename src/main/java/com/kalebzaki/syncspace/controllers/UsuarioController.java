@@ -46,8 +46,8 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity updateUsuario(@RequestBody @Valid UsuarioAtualizacaoDTO dadosUsuario) {
+    @PutMapping("{/id}")
+    public ResponseEntity updateUsuario(@RequestBody @RequestParam @Valid UsuarioAtualizacaoDTO dadosUsuario) {
         this.usuarioService.updateUsuario(dadosUsuario);
         return ResponseEntity.ok().build();
     }

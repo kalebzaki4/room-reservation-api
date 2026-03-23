@@ -4,6 +4,7 @@ import com.kalebzaki.syncspace.dto.AtualizarSalaDTO;
 import com.kalebzaki.syncspace.dto.CriacaoSalaDTO;
 import com.kalebzaki.syncspace.models.Room;
 import com.kalebzaki.syncspace.services.RoomService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +28,13 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Room> criarSala(@RequestBody CriacaoSalaDTO room) {
+    public ResponseEntity<Room> criarSala(@RequestBody @Valid CriacaoSalaDTO room) {
         Room createdRoom = roomService.criarSala(room);
         return ResponseEntity.ok(createdRoom);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Room> updateSala(@RequestBody @PathVariable AtualizarSalaDTO room) {
+    public ResponseEntity<Room> updateSala(@Valid @RequestBody @PathVariable AtualizarSalaDTO room) {
         Room atualizadaSala = roomService.updateSala(room);
         return ResponseEntity.ok(atualizadaSala);
     }
