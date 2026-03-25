@@ -24,7 +24,7 @@ public class RoomService {
     }
 
     @Transactional
-    public Room criarSala(CriacaoSalaDTO dados) {
+    public Room salvarSala(CriacaoSalaDTO dados) {
         Room room = new Room();
         room.setNome(dados.nome());
         room.setCapacidade(dados.capacidade());
@@ -34,8 +34,8 @@ public class RoomService {
     }
 
     @Transactional
-    public Room updateSala(AtualizarSalaDTO room) {
-        Room existingRoom = roomRepository.findById(room.id()).orElseThrow(() -> new RuntimeException("Sala não encontrada com ID: " + room.id()));
+    public Room updateSala(Long id, AtualizarSalaDTO room) {
+        Room existingRoom = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Sala não encontrada com ID: " + room.id()));
         existingRoom.setNome(room.nome());
         existingRoom.setCapacidade(room.cacapacidade());
         existingRoom.setLocalidade(room.localidade());

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -35,9 +36,10 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity salvarUsuario(@RequestBody @Valid AutenticacaoDTO dadosUsuario) {
-        this.usuarioService.salvarUsuario(dadosUsuario);
-        return ResponseEntity.ok().build();
+    public ResponseEntity salvarUsuario(@RequestBody @Valid AutenticacaoDTO dadosUsuario, UriComponentsBuilder uriBuilder) {
+        Usuario usuarioSalvo = usuarioService.salvarUsuario(dadosUsuario);
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuarioSalvo.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuarioSalvo);
     }
 
     @DeleteMapping("/{id}")
@@ -48,7 +50,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity updateUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioAtualizacaoDTO dadosUsuario) {
-        this.usuarioService.updateUsuario(dadosUsuario);
+        this.usuarioService.updateUsuario(id, dadosUsuario);
         return ResponseEntity.ok().build();
     }
 }
