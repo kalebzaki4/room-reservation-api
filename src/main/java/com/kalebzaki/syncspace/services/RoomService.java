@@ -37,7 +37,7 @@ public class RoomService {
     public Room updateSala(Long id, AtualizarSalaDTO room) {
         Room existingRoom = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Sala não encontrada com ID: " + room.id()));
         existingRoom.setNome(room.nome());
-        existingRoom.setCapacidade(room.cacapacidade());
+        existingRoom.setCapacidade(room.capacidade());
         existingRoom.setLocalidade(room.localidade());
 
         return roomRepository.save(existingRoom);
