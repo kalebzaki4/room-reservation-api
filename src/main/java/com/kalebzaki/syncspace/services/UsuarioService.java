@@ -43,8 +43,8 @@ public class UsuarioService {
     }
 
     @Transactional
-    public void updateUsuario(@Valid UsuarioAtualizacaoDTO dadosUsuario) {
-        Usuario usuario = usuarioRepository.findById(dadosUsuario.id()).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário"));
+    public void updateUsuario(Long id, @Valid UsuarioAtualizacaoDTO dadosUsuario) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário"));
         usuario.setNome(dadosUsuario.nome());
         usuario.setEmail(dadosUsuario.email());
         usuario.setSenha(dadosUsuario.senha());

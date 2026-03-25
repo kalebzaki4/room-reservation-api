@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,14 +29,15 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Room> criarSala(@RequestBody @Valid CriacaoSalaDTO room) {
-        Room createdRoom = roomService.criarSala(room);
-        return ResponseEntity.ok(createdRoom);
+    public ResponseEntity<Room> salvarSala(@RequestBody @Valid CriacaoSalaDTO room, UriComponentsBuilder uriBuilder) {
+        Room roomSalvo = roomService.salvarSala(room);
+        var uri = uriBuilder.path("/rooms/{id}").buildAndExpand(roomSalvo.getId()).toUri();
+        return ResponseEntity.created(uri).body(roomSalvo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Room> updateSala(@PathVariable Long id, @RequestBody @Valid AtualizarSalaDTO room) {
-        Room atualizadaSala = roomService.updateSala(room);
+        Room atualizadaSala = roomService.updateSala(id, room);
         return ResponseEntity.ok(atualizadaSala);
     }
 
