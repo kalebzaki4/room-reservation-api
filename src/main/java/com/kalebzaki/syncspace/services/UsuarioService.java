@@ -2,7 +2,7 @@ package com.kalebzaki.syncspace.services;
 
 import com.kalebzaki.syncspace.dto.UsuarioAtualizacaoDTO;
 import com.kalebzaki.syncspace.dto.AutenticacaoDTO;
-import com.kalebzaki.syncspace.exceptions.ResourceNotFoundException;
+import com.kalebzaki.syncspace.infra.exceptions.ResourceNotFoundException; // ⬅️ O Import corrigido aqui!
 import com.kalebzaki.syncspace.models.Usuario;
 import com.kalebzaki.syncspace.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
@@ -37,7 +37,7 @@ public class UsuarioService {
 
     @Transactional
     public void deleteUsuario(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(STR."Ops! Não encontramos o usuário com o ID: " + id));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário com o ID: " + id));
 
         usuarioRepository.delete(usuario);
     }

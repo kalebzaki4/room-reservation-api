@@ -1,4 +1,4 @@
-package com.kalebzaki.syncspace.exceptions;
+package com.kalebzaki.syncspace.infra.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
