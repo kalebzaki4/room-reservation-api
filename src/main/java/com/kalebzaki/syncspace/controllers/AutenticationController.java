@@ -1,6 +1,8 @@
 package com.kalebzaki.syncspace.controllers;
 
 import com.kalebzaki.syncspace.dto.AutenticacaoDTO;
+import com.kalebzaki.syncspace.infra.security.TokenService;
+import com.kalebzaki.syncspace.models.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,12 @@ public class AutenticationController {
 
     private final AuthenticationManager authenticationManager;
 
+    private final TokenService tokenService;
+
     @Autowired
-    public AutenticationController(AuthenticationManager authenticationManager) {
+    public AutenticationController(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping
@@ -27,6 +32,6 @@ public class AutenticationController {
         var token = new UsernamePasswordAuthenticationToken(dados.nome(), dados.senha());
         var authentication = authenticationManager.authenticate(token);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(tokenService.gerarToken((Usuario) authentication.getPrincipal()));
     }
 }

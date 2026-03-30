@@ -2,7 +2,7 @@ package com.kalebzaki.syncspace.services;
 
 import com.kalebzaki.syncspace.dto.UsuarioAtualizacaoDTO;
 import com.kalebzaki.syncspace.dto.AutenticacaoDTO;
-import com.kalebzaki.syncspace.infra.exceptions.ResourceNotFoundException; // ⬅️ O Import corrigido aqui!
+import com.kalebzaki.syncspace.infra.exception.ResourceNotFoundException; // ⬅️ O Import corrigido aqui!
 import com.kalebzaki.syncspace.models.Usuario;
 import com.kalebzaki.syncspace.repositories.UsuarioRepository;
 import jakarta.validation.Valid;

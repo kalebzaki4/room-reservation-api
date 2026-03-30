@@ -1,4 +1,4 @@
-package com.kalebzaki.syncspace.infra.exceptions;
+package com.kalebzaki.syncspace.infra.exception;
 
 import com.kalebzaki.syncspace.dto.ErroRespostaDTO;
 import org.springframework.http.ResponseEntity;
