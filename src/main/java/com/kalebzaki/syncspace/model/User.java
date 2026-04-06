@@ -1,44 +1,49 @@
-package com.kalebzaki.syncspace.models;
+package com.kalebzaki.syncspace.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+@Service
 @Table(name = "usuarios")
-@NoArgsConstructor
 @Getter
 @Setter
-public class Usuario implements UserDetails {
-
-    @Id
+@NoArgsConstructor
+public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
-    private String nome;
+    @Column(unique = true)
+    private String username;
+
+    @Column(unique = true)
     private String email;
-    private String senha;
+
+    @Column(unique = true)
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of();
     }
 
     @Override
-    public String getPassword() {
-        return senha;
+    public @Nullable String getPassword() {
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return this.username;
     }
 
     @Override
