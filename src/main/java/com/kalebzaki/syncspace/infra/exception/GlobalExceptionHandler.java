@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
                 System.currentTimeMillis(),
                 404,
                 "Resource Not Found",
-                "The requested resource was not found.",
+                ex.getMessage(),
                 request.getRequestURI()
         );
         return ResponseEntity.status(404).body(error);

@@ -7,13 +7,12 @@ import lombok.Setter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 
-@Service
-@Table(name = "usuarios")
+@Entity(name = "User")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,13 +21,13 @@ public class User implements UserDetails {
     @Id
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String username;
 
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String password;
 
     @Override
