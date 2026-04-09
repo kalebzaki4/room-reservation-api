@@ -1,4 +1,4 @@
-package com.kalebzaki.syncspace.exception;
+package com.kalebzaki.syncspace.infra.exception;
 
 import com.kalebzaki.syncspace.dto.StandardError;
 import org.springframework.dao.DataIntegrityViolationException;

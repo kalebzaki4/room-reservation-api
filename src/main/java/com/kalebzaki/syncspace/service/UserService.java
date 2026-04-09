@@ -1,6 +1,6 @@
 package com.kalebzaki.syncspace.service;
 
-import com.kalebzaki.syncspace.exception.ResourceNotFoundException;
+import com.kalebzaki.syncspace.infra.exception.ResourceNotFoundException;
 import com.kalebzaki.syncspace.model.User;
 import com.kalebzaki.syncspace.repository.UserRepository;
 import jakarta.transaction.Transactional;
