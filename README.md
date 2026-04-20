@@ -51,3 +51,15 @@ cd room-reservation-api
 
 # Suba todo o ecossistema (App + DB)
 docker-compose up -d
+```
+
+🧪 Qualidade de Código
+
+O projeto conta com uma suíte de testes focada no caminho feliz e em casos de erro (Edge cases):
+
+Testes Unitários: JUnit 5 e Mockito.
+
+Validação de DTOs: Bean Validation para garantir que dados sujos não cheguem ao banco.
+
+👨‍💻 Autor
+Kaleb Zaki
