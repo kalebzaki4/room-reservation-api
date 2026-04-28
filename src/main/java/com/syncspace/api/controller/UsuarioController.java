@@ -34,7 +34,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
         Usuario usuario = usuarioService.findUsuarioById(id);
-        return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(usuario);
     }
 
     // criar usuário
