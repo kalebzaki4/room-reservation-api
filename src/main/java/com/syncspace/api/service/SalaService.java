@@ -2,7 +2,6 @@ package com.syncspace.api.service;
 
 import com.syncspace.api.dto.DadosSala;
 import com.syncspace.api.model.Sala;
-import com.syncspace.api.model.Usuario;
 import com.syncspace.api.repository.SalaRepository;
 import com.syncspace.api.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
