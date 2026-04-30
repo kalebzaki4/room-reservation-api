@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "salas")
 @Getter
@@ -26,5 +28,8 @@ public class Sala {
     private Integer quantidade;
 
     @Column(nullable = false)
-    private Long tempoExpiracao;
+    private LocalDateTime dataCriacao;
+
+    @Column(nullable = false)
+    private LocalDateTime tempoExpiracao;
 }
