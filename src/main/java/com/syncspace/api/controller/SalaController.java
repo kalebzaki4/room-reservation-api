@@ -37,12 +37,7 @@ public class SalaController {
     // criar sala
     @PostMapping
     public ResponseEntity<Sala> createSala(@RequestBody @Valid DadosSala dadosCadastro, UriComponentsBuilder uriBuilder) {
-        var sala = new Sala();
-        sala.setNome(dadosCadastro.nome());
-        sala.setDescricao(dadosCadastro.descricao());
-        sala.setQuantidade(dadosCadastro.quantidade());
-        sala.setTempoExpiracao(dadosCadastro.tempoExpiracao());
-        Sala novaSala = salaService.createSala(sala);
+        Sala novaSala = salaService.createSala(dadosCadastro);
 
         var uri = uriBuilder.path("/salas/{id}").buildAndExpand(novaSala.getId()).toUri();
         return ResponseEntity.created(uri).body(novaSala);

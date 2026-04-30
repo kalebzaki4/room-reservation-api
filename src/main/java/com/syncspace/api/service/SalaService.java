@@ -5,9 +5,12 @@ import com.syncspace.api.model.Sala;
 import com.syncspace.api.repository.SalaRepository;
 import com.syncspace.api.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +25,9 @@ public class SalaService {
     }
 
     // ver sala expecifica
-    @Transactional
     public Sala findSalaById(Long sala) {
-        return salaRepository.findById(sala).orElseThrow(() -> new RuntimeException("Sala não encontrada"));
+        return salaRepository.findById(sala)
+                .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
     }
 
     // ver todas as salas
@@ -34,12 +37,19 @@ public class SalaService {
 
     // criar sala
     @Transactional
-    public Sala createSala(Sala sala) {
-        Optional<Sala> optionalSala = salaRepository.findByNome(sala.getNome());
-        if (optionalSala.isPresent()) {
-            throw new RuntimeException("Sala já cadastrada");
+    public Sala createSala(@Valid DadosSala dadosCadastro) {
+        Optional<Sala> salaExistente = salaRepository.findByNome(dadosCadastro.nome());
+        if (salaExistente.isPresent()) {
+            throw new RuntimeException("Já existe uma sala com esse nome");
         }
-        return salaRepository.save(sala);
+        Sala novaSala = new Sala();
+        novaSala.setNome(dadosCadastro.nome());
+        novaSala.setDescricao(dadosCadastro.descricao());
+        novaSala.setQuantidade(dadosCadastro.quantidade());
+        LocalDateTime dataHora = LocalDateTime.now();
+        novaSala.setDataCriacao(dataHora);
+        novaSala.setTempoExpiracao(dataHora.plusMinutes(dadosCadastro.tempoExpiracao()));
+        return salaRepository.save(novaSala);
     }
 
     // atualizar sala
@@ -49,8 +59,9 @@ public class SalaService {
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada")));
         sala.setNome(dadosAtualizacao.nome());
         sala.setDescricao(dadosAtualizacao.descricao());
-        sala.setTempoExpiracao(dadosAtualizacao.tempoExpiracao());
         sala.setQuantidade(dadosAtualizacao.quantidade());
+        LocalDateTime dataHora = LocalDateTime.now();
+        sala.setTempoExpiracao(dataHora.plusMinutes(dadosAtualizacao.tempoExpiracao()));
         return salaRepository.save(sala);
     }
 
@@ -59,5 +70,12 @@ public class SalaService {
     public void deleteSala(Long sala) {
         Sala salaDeletada = salaRepository.findById(sala).orElseThrow(() -> new RuntimeException("Sala não encontrada"));
         salaRepository.delete(salaDeletada);
+    }
+
+    // excluir salas expiradas
+    @Transactional
+    @Scheduled(fixedRate = 60000)
+    public void scheduled() {
+        salaRepository.deleteByTempoExpiracaoBefore(LocalDateTime.now());
     }
 }
