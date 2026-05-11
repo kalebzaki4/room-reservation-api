@@ -51,7 +51,6 @@ room-reservation-api/
 
 | Regra | Implementação |
 |-------|---------------|
-| **Prevenção de reserva dupla** | Campo `@Version` na entidade `Sala` gera exceção `ObjectOptimisticLockingFailureException` em conflitos. |
 | **Validação de horário** | Reservas não podem ser feitas para datas passadas (validação via Bean Validation). |
 | **Segurança escalonada** | Apenas admin pode excluir/atualizar salas; endpoints de autenticação abertos. |
 | **Isolamento de DTOs** | Records Java 17+ usados para entrada/saída, nunca expõem a entidade diretamente. |
