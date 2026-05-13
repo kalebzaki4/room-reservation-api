@@ -1,9 +1,10 @@
 package com.syncspace.api.controller;
 
-import com.syncspace.api.dto.DadosCadastroUsuario;
 import com.syncspace.api.dto.DadosAtualizacaoUsuario;
-import com.syncspace.api.service.UsuarioService;
+import com.syncspace.api.dto.DadosCadastroUsuario;
+import com.syncspace.api.dto.UsuarioResponseDTO;
 import com.syncspace.api.model.Usuario;
+import com.syncspace.api.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,40 +24,73 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    // ver todos os usuários
+    // listar todos os usuários
     @GetMapping
-    public ResponseEntity<List<Usuario>> getAllUsuarios() {
-        List<Usuario> usuarios = usuarioService.findAllUsuarios();
+    public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.findAllUsuarios();
         return ResponseEntity.ok(usuarios);
     }
 
-    // ver usuário específico
+    // buscar usuário por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDTO> getUsuarioById(@PathVariable Long id) {
         Usuario usuario = usuarioService.findUsuarioById(id);
-        return ResponseEntity.ok(usuario);
+
+        UsuarioResponseDTO response = new UsuarioResponseDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     // criar usuário
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody @Valid DadosCadastroUsuario dadosCadastro,
-                                                 UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<UsuarioResponseDTO> createUsuario(
+            @RequestBody @Valid DadosCadastroUsuario dadosCadastro,
+            UriComponentsBuilder uriComponentsBuilder
+    ) {
         var usuario = new Usuario();
         usuario.setNome(dadosCadastro.nome());
         usuario.setEmail(dadosCadastro.email());
         usuario.setSenha(dadosCadastro.senha());
+
         Usuario novoUsuario = usuarioService.createUsuario(usuario);
 
-        var uri = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(novoUsuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(novoUsuario);
+        UsuarioResponseDTO response = new UsuarioResponseDTO(
+                novoUsuario.getId(),
+                novoUsuario.getNome(),
+                novoUsuario.getEmail()
+        );
+
+        var uri = uriComponentsBuilder
+                .path("/usuarios/{id}")
+                .buildAndExpand(novoUsuario.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(response);
     }
 
     // atualizar usuário
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id,
-                                                 @RequestBody @Valid DadosAtualizacaoUsuario dados) {
+    public ResponseEntity<UsuarioResponseDTO> updateUsuario(
+            @PathVariable Long id,
+            @RequestBody @Valid DadosAtualizacaoUsuario dados
+    ) {
         Usuario updatedUsuario = usuarioService.updateUsuario(id, dados);
-        return updatedUsuario != null ? ResponseEntity.ok(updatedUsuario) : ResponseEntity.notFound().build();
+
+        if (updatedUsuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        UsuarioResponseDTO response = new UsuarioResponseDTO(
+                updatedUsuario.getId(),
+                updatedUsuario.getNome(),
+                updatedUsuario.getEmail()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     // deletar usuário
